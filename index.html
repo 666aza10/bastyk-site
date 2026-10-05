@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Бот, который каждый день смотрит в кассу магазина и пишет владельцу, где уходят деньги. Табель, аналитика, возврат покупателей.">
+<meta property="og:title" content="Бастык. Бот для владельца магазина">
+<meta property="og:description" content="Каждый день смотрит в кассу и пишет, где уходят деньги. Бесплатный разбор вашей кассы за 3 дня.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bastyk.kz/">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
+<title>Бастык для магазина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F5F7F4; --surface:#FFFFFF; --ink:#18211C; --muted:#5B6760; --line:#DDE3DE;
+  --accent:#2F6B4F; --accent-soft:#E3EEE7; --warn:#B4492F;
+  --display:"Unbounded", "Arial Black", sans-serif;
+  --body:"Manrope", "Segoe UI", Arial, sans-serif;
+  --mono:"JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111613; --surface:#18201B; --ink:#E8EEE9; --muted:#9AA79F; --line:#2A352E;
+    --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#18201B; --ink:#E8EEE9; --muted:#9AA79F; --line:#2A352E;
+  --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);}
+.wrap{max-width:760px;margin:0 auto;padding-inline:18px;padding-block:40px 64px;display:flex;flex-direction:column;gap:56px;}
+h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em;}
+h1{font-size:clamp(26px,5.4vw,40px);line-height:1.15;}
+h2{font-size:clamp(20px,3.6vw,26px);line-height:1.2;}
+p{margin:0;max-width:62ch;}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+.hero{display:flex;flex-direction:column;gap:18px;}
+.hero .lead{font-size:18px;color:var(--muted);}
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;max-width:440px;}
+.chat .who{font:500 12px/1 var(--mono);color:var(--muted);}
+.chat .msg{font-size:15px;}
+.chat .msg b{color:var(--warn);}
+section{display:flex;flex-direction:column;gap:20px;}
+.finds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.finds li{display:grid;grid-template-columns:118px 1fr;gap:16px;padding-block:16px;border-top:1px solid var(--line);align-items:baseline;}
+.finds li:last-child{border-bottom:1px solid var(--line);}
+.num{font:700 22px/1.1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums;}
+.finds h3{margin:0 0 4px;font:700 16px/1.35 var(--body);}
+.finds p{color:var(--muted);font-size:15px;}
+.mods{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;}
+.mod.first{border-color:var(--accent);}
+.mod .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.mod h3{margin:0;font:700 18px/1.25 var(--display);}
+.mod ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px;display:flex;flex-direction:column;gap:3px;}
+.price{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;gap:8px;font:500 14px/1.3 var(--mono);font-variant-numeric:tabular-nums;}
+.price span:last-child{color:var(--ink);font-weight:500;}
+.price small{display:block;color:var(--muted);font:400 12px/1.3 var(--body);}
+.bundle{background:var(--accent);color:var(--bg);border-radius:14px;padding:20px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;}
+.bundle h3{margin:0;font:700 18px/1.25 var(--display);}
+.bundle p{font-size:14.5px;opacity:.9;}
+.bundle .big{font:700 22px/1.2 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.bundle .big s{opacity:.6;font-weight:500;font-size:15px;margin-left:6px;}
+.note{font-size:14px;color:var(--muted);}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:s;}
+.steps li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;counter-increment:s;}
+.steps li::before{content:counter(s);font:700 16px/40px var(--display);text-align:center;width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);}
+.steps h3{margin:8px 0 2px;font:700 16px/1.3 var(--body);}
+.steps p{color:var(--muted);font-size:15px;}
+.cta{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px;}
+.cta strong{font:700 18px/1.3 var(--display);}
+.tg{background:var(--accent-soft);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px;max-width:460px;}
+.tg-head{display:flex;gap:10px;align-items:center;padding-bottom:6px;}
+.tg-head .ava{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font:700 14px var(--display);}
+.tg-head b{display:block;font-size:14.5px;}
+.tg-head small{color:var(--muted);font-size:12px;}
+.bubble{background:var(--surface);border-radius:4px 14px 14px 14px;padding:10px 12px 18px;white-space:pre-line;font-size:14px;line-height:1.5;position:relative;font-variant-numeric:tabular-nums;}
+.bubble.alert{border-left:3px solid var(--warn);}
+.bubble .m{font-style:normal;color:var(--muted);letter-spacing:.05em;}
+.bubble .time{position:absolute;right:10px;bottom:4px;font:500 11px var(--mono);color:var(--muted);}
+@media (max-width:560px){
+  .mods{grid-template-columns:1fr;}
+  .finds li{grid-template-columns:1fr;gap:6px;}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Бастык · бот для владельца магазина</span>
+    <h1>Бот, который каждый день смотрит в вашу кассу и пишет, где уходят деньги</h1>
+    <p class="lead">Подключается к кассе, сам считает отчёты, табель и зарплату. Вы задаёте вопрос в телеграме и получаете ответ по своим цифрам.</p>
+    <div class="chat" aria-label="Пример сообщения бота">
+      <span class="who">бот · 10:02</span>
+      <span class="msg">Накладная от поставщика. Гвоздика <b>140 → 357 ₸</b>, рост в 2,5 раза. В карточке товара касса показывает, что цена не менялась.</span>
+    </div>
+  </header>
+
+  <section>
+    <span class="eyebrow">Утро владельца</span>
+    <h2>Так выглядят сообщения бота в группе магазина</h2>
+    <p class="note">Настоящие сообщения за 4 и 5 октября. Суммы, название магазина и имя покупателя скрыты.</p>
+    <div class="tg">
+      <div class="tg-head"><span class="ava">Б</span><div><b>Отчёты магазина</b><small>бот · группа</small></div></div>
+      <div class="bubble">
+<b>🌹 Магазин — 04.10 (Вс)</b>
+
+💰 Выручка: <i class="m">••• •••</i> ₸ 🟢 +4% к вчера
+📦 Заказов: 41
+🧾 Средний чек: <i class="m">•• •••</i> ₸
+💹 Маржа 40% 🔴 −0,8 п.п. к среднему за сентябрь
+   ⚠️ без закупочной цены: 5 позиций
+📇 С карточкой: 37 из 41 (90%)
+👥 Новых 31 · Повторных 7 (18%)
+📅 Сегодня к доставке: 13 заказов
+💸 Не оплачено: 7 заказов · <i class="m">••• •••</i> ₸
+
+📊 Среднее за 7 дней: 🟢 +26%
+<span class="time">09:06</span></div>
+      <div class="bubble alert">
+<b>🚨 2ГИС: негативный отзыв, нужен ответ</b>
+⭐ <i class="m">Покупатель</i> (05.10)
+Я заказывал именно то, что было показано на фото… получил совсем не то, за что заплатил.
+<span class="time">18:30</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Что бот уже нашёл</span>
+    <h2>Реальные случаи из магазинов, где он работает</h2>
+    <ul class="finds">
+      <li><span class="num">Карта</span><div><h3>Менеджер присылал покупателям свою карту</h3><p>Владелец заподозрил, что часть оплат уходит мимо кассы. Теперь бот читает переписку с покупателями и сразу пишет, если в счёте карта не из рабочего списка.</p></div></li>
+      <li><span class="num">×2</span><div><h3>Себестоимость в кассе была завышена вдвое</h3><p>Ошибку нашли пересчётом по приходным накладным. Всё это время маржа считалась по неверной цифре.</p></div></li>
+      <li><span class="num">×2,5</span><div><h3>Поставщик поднял цену и не предупредил</h3><p>Касса сравнивает с ценой в карточке товара, а не с прошлой закупкой. Бот сверяет каждую накладную с прошлыми поставками.</p></div></li>
+      <li><span class="num">19 из 28</span><div><h3>Покупатели уходили, потому что нужного не было в наличии</h3><p>Бот разбирает переписки, где человек не купил, и показывает причину. Закуп видит, что брать, а не гадает.</p></div></li>
+      <li><span class="num">2% → 30%</span><div><h3>Сотрудники начали заводить карточки клиентов</h3><p>Каждый день бот показывает, кто из менеджеров не прикрепил клиента к заказу. Год назад карточка была у 2% заказов, сейчас у 30%.</p></div></li>
+      <li><span class="num">Табель</span><div><h3>Сотрудник отработал смену, а в зарплату не попал</h3><p>Управляющая вписывала формулу руками в клетку каждого, кто вышел, и однажды пропустила человека. Теперь бот сам видит, кто был на смене, и проставляет это в зарплатную таблицу.</p></div></li>
+      <li><span class="num">8 из 10</span><div><h3>Покупатели приходили один раз и не возвращались</h3><p>Касса этого не показывает, для неё каждый заказ новый. Бот считает повторные покупки и возвращает людей рассылками.</p></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Модули и цены</span>
+    <h2>Берёте то, что нужно сейчас, остальное добавляете потом</h2>
+    <div class="mods">
+      <article class="mod first">
+        <span class="tag">с любой кассой</span>
+        <h3>Табель</h3>
+        <ul>
+          <li>сотрудники отмечают смену в телеграме</li>
+          <li>опоздания видно сразу</li>
+          <li>график на месяц, сотрудники записываются сами</li>
+          <li>зарплата считается без формул</li>
+        </ul>
+        <div class="price"><span>30 000 ₸ в месяц<small>подключение 30 000 ₸</small></span></div>
+      </article>
+      <article class="mod">
+        <span class="tag">основа</span>
+        <h3>Аналитика</h3>
+        <ul>
+          <li>отчёт за день, неделю и месяц</li>
+          <li>ответы на вопросы по вашим цифрам</li>
+          <li>контроль закупа и накладных</li>
+          <li>сигнал, если точка затихла или касса не сошлась</li>
+        </ul>
+        <div class="price"><span>50 000 ₸ в месяц<small>подключение 50 000 ₸</small></span></div>
+      </article>
+      <article class="mod">
+        <span class="tag">к аналитике</span>
+        <h3>Возврат покупателей</h3>
+        <ul>
+          <li>анкета важных дат: дни рождения, годовщины</li>
+          <li>напоминание за неделю до праздника</li>
+          <li>сообщение через месяц после первой покупки</li>
+          <li>считаем, кто купил после нашего сообщения</li>
+        </ul>
+        <div class="price"><span>70 000 ₸ в месяц<small>подключение 100 000 ₸</small></span></div>
+      </article>
+      <article class="mod">
+        <span class="tag">к аналитике</span>
+        <h3>Переписки</h3>
+        <ul>
+          <li>почему не купили: причина по каждому диалогу</li>
+          <li>скорость ответа менеджеров</li>
+          <li>проверка карты в каждом счёте</li>
+        </ul>
+        <div class="price"><span>30 000 ₸ в месяц<small>без подключения</small></span></div>
+      </article>
+    </div>
+    <div class="bundle">
+      <div><h3>Всё вместе</h3><p>Табель, аналитика, возврат покупателей и переписки</p></div>
+      <div class="big">150 000 ₸/мес<s>180 000</s></div>
+    </div>
+    <p class="note">Подключение всего пакета 150 000 ₸ вместо 180 000 ₸. Возврат покупателей и переписки работают через WhatsApp Business: сами сообщения Meta списывает с вашей карты напрямую. Аналитика работает с Posiflora, МойСклад и Posterix, табелю касса не нужна.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Как начать</span>
+    <h2>Сначала бесплатный разбор вашей кассы</h2>
+    <ol class="steps">
+      <li><div><h3>Вы даёте ключ доступа к кассе</h3><p>Бот только читает данные и ничего в кассе не меняет. Ваши цифры видим только мы: никому их не показываем и в примерах не используем. Ключ можно отозвать в любой момент.</p></div></li>
+      <li><div><h3>За три дня мы смотрим ваши цифры</h3><p>Закуп, списания, повторные покупки, скидки, работа менеджеров.</p></div></li>
+      <li><div><h3>Показываем три находки про ваши деньги</h3><p>Если они того стоят, подключаем бота. Если нет, вы ничего не платите.</p></div></li>
+    </ol>
+    <div class="cta">
+      <strong>Хотите разбор? Ответьте на это сообщение</strong>
+      <p class="note">Напишите, какая у вас касса и сколько точек.</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
