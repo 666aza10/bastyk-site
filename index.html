@@ -8,10 +8,6 @@
 <meta property="og:description" content="Каждый день смотрит в кассу и пишет, где уходят деньги. Бесплатный разбор вашей кассы за 3 дня.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bastyk.kz/">
-<meta property="og:image" content="https://bastyk.kz/img/og.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
 <title>Бастык для магазина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +16,7 @@
 <style>
 :root{
   --bg:#F5F7F4; --surface:#FFFFFF; --ink:#18211C; --muted:#5B6760; --line:#DDE3DE;
-  --accent:#2F6B4F; --accent-soft:#E3EEE7; --warn:#B4492F; --frame:#18211C;
+  --accent:#2F6B4F; --accent-soft:#E3EEE7; --warn:#B4492F;
   --display:"Unbounded", "Arial Black", sans-serif;
   --body:"Manrope", "Segoe UI", Arial, sans-serif;
   --mono:"JetBrains Mono", Consolas, monospace;
@@ -28,79 +24,39 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#111613; --surface:#18201B; --ink:#E8EEE9; --muted:#9AA79F; --line:#2A352E;
-    --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; --frame:#000; color-scheme:dark;
+    --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#111613; --surface:#18201B; --ink:#E8EEE9; --muted:#9AA79F; --line:#2A352E;
-  --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; --frame:#000; color-scheme:dark;
+  --accent:#7CC39E; --accent-soft:#1E2E25; --warn:#E3866E; color-scheme:dark;
 }
-html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);}
-.wrap{max-width:860px;margin:0 auto;padding-inline:18px;padding-block:36px 64px;display:flex;flex-direction:column;gap:60px;}
+.wrap{max-width:760px;margin:0 auto;padding-inline:18px;padding-block:40px 64px;display:flex;flex-direction:column;gap:56px;}
 h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em;}
 h1{font-size:clamp(26px,5.4vw,40px);line-height:1.15;}
 h2{font-size:clamp(20px,3.6vw,26px);line-height:1.2;}
 p{margin:0;max-width:62ch;}
-a{color:inherit}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
-section{display:flex;flex-direction:column;gap:20px;}
-.note{font-size:14px;color:var(--muted);}
-
-/* hero */
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px 40px;align-items:center;}
-.hero .txt{display:flex;flex-direction:column;gap:18px;}
+.hero{display:flex;flex-direction:column;gap:18px;}
 .hero .lead{font-size:18px;color:var(--muted);}
-.btn{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;background:var(--accent);color:var(--bg);text-decoration:none;border-radius:12px;padding:13px 18px;font:700 15px/1 var(--body);}
-.btn small{font:400 13px/1 var(--body);opacity:.85}
-.phone{width:min(290px,64vw);margin:0 auto;background:var(--frame);border-radius:40px;padding:9px;box-shadow:0 30px 50px -28px rgba(24,33,28,.55);position:relative;}
-.phone img{display:block;width:100%;height:auto;border-radius:32px;aspect-ratio:390/800;object-fit:cover;}
-.phone::after{content:"";position:absolute;left:50%;top:9px;transform:translateX(-50%);width:96px;height:24px;border-radius:0 0 16px 16px;background:var(--frame);}
-.hero .cap{font:500 12px/1.4 var(--mono);color:var(--muted);text-align:center;margin-top:10px;}
-
-/* carousel */
-.chips{display:flex;gap:8px;flex-wrap:wrap;}
-.chips button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;font:500 13px/1 var(--body);cursor:pointer;}
-.chips button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg);}
-.car{position:relative;}
-.track{position:relative;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;padding:4px 18px 10px;margin-inline:-18px;scrollbar-width:none;overscroll-behavior-x:contain;}
-.track::-webkit-scrollbar{display:none}
-.slide{flex:0 0 min(262px,74vw);scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;scroll-margin-top:24px;}
-.slide .ph{background:var(--frame);border-radius:26px;padding:6px;}
-.slide img{display:block;width:100%;border-radius:20px;aspect-ratio:390/800;background:#dde5ec;}
-.slide figcaption{display:flex;flex-direction:column;gap:3px;padding-inline:4px;}
-.slide .g{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;gap:8px;align-items:center;}
-.slide .g i{font-style:normal;color:var(--muted);letter-spacing:0;text-transform:none;border:1px solid var(--line);border-radius:6px;padding:2px 5px;}
-.slide strong{font:700 15px/1.3 var(--body);}
-.slide p{font-size:14px;color:var(--muted);line-height:1.45;}
-.nav{display:flex;align-items:center;gap:12px;justify-content:space-between;}
-.nav .cnt{font:500 13px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;}
-.dots{display:flex;gap:5px;flex-wrap:wrap;}
-.dots i{width:6px;height:6px;border-radius:50%;background:var(--line);display:block;}
-.dots i.on{background:var(--accent);}
-.arrows{display:none;gap:8px;}
-.arrows button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;}
-.arrows button:hover{border-color:var(--accent);color:var(--accent);}
-@media (hover:hover) and (min-width:760px){.arrows{display:flex}}
-
-/* finds */
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;max-width:440px;}
+.chat .who{font:500 12px/1 var(--mono);color:var(--muted);}
+.chat .msg{font-size:15px;}
+.chat .msg b{color:var(--warn);}
+section{display:flex;flex-direction:column;gap:20px;}
 .finds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
 .finds li{display:grid;grid-template-columns:118px 1fr;gap:16px;padding-block:16px;border-top:1px solid var(--line);align-items:baseline;}
 .finds li:last-child{border-bottom:1px solid var(--line);}
 .num{font:700 22px/1.1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums;}
 .finds h3{margin:0 0 4px;font:700 16px/1.35 var(--body);}
 .finds p{color:var(--muted);font-size:15px;}
-
-/* modules */
 .mods{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-.mod{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;position:relative;}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;}
 .mod.first{border-color:var(--accent);}
 .mod .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
-.mod h3{margin:0;font:700 18px/1.25 var(--display);padding-right:72px;min-height:88px;}
+.mod h3{margin:0;font:700 18px/1.25 var(--display);}
 .mod ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px;display:flex;flex-direction:column;gap:3px;}
-.shot{position:absolute;right:14px;top:14px;width:56px;border-radius:12px;padding:3px;background:var(--frame);text-decoration:none;}
-.shot img{display:block;width:100%;height:104px;border-radius:9px;object-fit:cover;object-position:top;}
-.shot span{position:absolute;left:0;right:0;bottom:-18px;text-align:center;font:500 10px/1 var(--mono);color:var(--muted);}
 .price{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;gap:8px;font:500 14px/1.3 var(--mono);font-variant-numeric:tabular-nums;}
 .price span:last-child{color:var(--ink);font-weight:500;}
 .price small{display:block;color:var(--muted);font:400 12px/1.3 var(--body);}
@@ -109,8 +65,7 @@ section{display:flex;flex-direction:column;gap:20px;}
 .bundle p{font-size:14.5px;opacity:.9;}
 .bundle .big{font:700 22px/1.2 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .bundle .big s{opacity:.6;font-weight:500;font-size:15px;margin-left:6px;}
-
-/* steps */
+.note{font-size:14px;color:var(--muted);}
 .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:s;}
 .steps li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;counter-increment:s;}
 .steps li::before{content:counter(s);font:700 16px/40px var(--display);text-align:center;width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);}
@@ -118,11 +73,15 @@ section{display:flex;flex-direction:column;gap:20px;}
 .steps p{color:var(--muted);font-size:15px;}
 .cta{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px;}
 .cta strong{font:700 18px/1.3 var(--display);}
-
-@media (max-width:759px){
-  .hero{grid-template-columns:1fr;}
-  .hero .ph-wrap{order:2;}
-}
+.tg{background:var(--accent-soft);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px;max-width:460px;}
+.tg-head{display:flex;gap:10px;align-items:center;padding-bottom:6px;}
+.tg-head .ava{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font:700 14px var(--display);}
+.tg-head b{display:block;font-size:14.5px;}
+.tg-head small{color:var(--muted);font-size:12px;}
+.bubble{background:var(--surface);border-radius:4px 14px 14px 14px;padding:10px 12px 18px;white-space:pre-line;font-size:14px;line-height:1.5;position:relative;font-variant-numeric:tabular-nums;}
+.bubble.alert{border-left:3px solid var(--warn);}
+.bubble .m{font-style:normal;color:var(--muted);letter-spacing:.05em;}
+.bubble .time{position:absolute;right:10px;bottom:4px;font:500 11px var(--mono);color:var(--muted);}
 @media (max-width:560px){
   .mods{grid-template-columns:1fr;}
   .finds li{grid-template-columns:1fr;gap:6px;}
@@ -134,108 +93,41 @@ section{display:flex;flex-direction:column;gap:20px;}
 <div class="wrap">
 
   <header class="hero">
-    <div class="txt">
-      <span class="eyebrow">Бастык · бот для владельца магазина</span>
-      <h1>Бот, который каждый день смотрит в вашу кассу и пишет, где уходят деньги</h1>
-      <p class="lead">Подключается к кассе, сам считает отчёты, табель и зарплату. Вы задаёте вопрос в телеграме и получаете ответ по своим цифрам.</p>
-      <a class="btn" href="#start">Хочу бесплатный разбор <small>3 дня, без оплаты</small></a>
-    </div>
-    <div class="ph-wrap">
-      <div class="phone"><img src="img/04-invoice.webp" alt="Сообщение бота: накладная, роза 40 см подорожала вдвое" width="390" height="800" fetchpriority="high"></div>
-      <div class="cap">настоящее сообщение бота, суммы скрыты</div>
+    <span class="eyebrow">Бастык · бот для владельца магазина</span>
+    <h1>Бот, который каждый день смотрит в вашу кассу и пишет, где уходят деньги</h1>
+    <p class="lead">Подключается к кассе, сам считает отчёты, табель и зарплату. Вы задаёте вопрос в телеграме и получаете ответ по своим цифрам.</p>
+    <div class="chat" aria-label="Пример сообщения бота">
+      <span class="who">бот · 10:02</span>
+      <span class="msg">Накладная от поставщика. Гвоздика <b>140 → 357 ₸</b>, рост в 2,5 раза. В карточке товара касса показывает, что цена не менялась.</span>
     </div>
   </header>
 
-  <section id="look">
-    <span class="eyebrow">Как это выглядит</span>
-    <h2>Так выглядят сообщения бота и экраны табеля</h2>
-    <p class="note">Сообщения настоящие, из групп магазинов за сентябрь и октябрь. Суммы, названия магазинов, имена и телефоны скрыты. Экраны табеля показаны на примере с условными сотрудниками.</p>
-    <div class="chips" id="chips">
-      <button type="button" data-go="sl-01" aria-pressed="true">Все</button>
-      <button type="button" data-go="sl-01">Аналитика</button>
-      <button type="button" data-go="sl-07">Табель</button>
-      <button type="button" data-go="sl-12">Возврат покупателей</button>
-      <button type="button" data-go="sl-13">Переписки</button>
-    </div>
-    <div class="car">
-      <div class="track" id="track" aria-label="Скриншоты бота, листайте вбок">
+  <section>
+    <span class="eyebrow">Утро владельца</span>
+    <h2>Так выглядят сообщения бота в группе магазина</h2>
+    <p class="note">Настоящие сообщения за 4 и 5 октября. Суммы, название магазина и имя покупателя скрыты.</p>
+    <div class="tg">
+      <div class="tg-head"><span class="ava">Б</span><div><b>Отчёты магазина</b><small>бот · группа</small></div></div>
+      <div class="bubble">
+<b>🌹 Магазин — 04.10 (Вс)</b>
 
-        <figure class="slide" id="sl-01">
-          <div class="ph"><img src="img/01-report.webp" alt="Утренний отчёт бота за день" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Утренний отчёт</strong><p>Каждое утро: выручка, заказы, маржа, повторные покупатели, что не оплачено. Читается за минуту.</p></figcaption>
-        </figure>
+💰 Выручка: <i class="m">••• •••</i> ₸ 🟢 +4% к вчера
+📦 Заказов: 41
+🧾 Средний чек: <i class="m">•• •••</i> ₸
+💹 Маржа 40% 🔴 −0,8 п.п. к среднему за сентябрь
+   ⚠️ без закупочной цены: 5 позиций
+📇 С карточкой: 37 из 41 (90%)
+👥 Новых 31 · Повторных 7 (18%)
+📅 Сегодня к доставке: 13 заказов
+💸 Не оплачено: 7 заказов · <i class="m">••• •••</i> ₸
 
-        <figure class="slide" id="sl-02">
-          <div class="ph"><img src="img/02-question.webp" alt="Вопрос управляющей и ответ бота по кассе" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Вопрос по своим цифрам</strong><p>Спросили в группе, что чаще покупают в сентябре. Бот посчитал по кассе и ответил через минуту.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-03">
-          <div class="ph"><img src="img/03-honest.webp" alt="Бот честно говорит, что данных нет, и позже присылает цифру" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Не выдумывает</strong><p>Если данных нет, бот так и говорит. Инструмент добавили в тот же день и прислали цифру.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-04">
-          <div class="ph"><img src="img/04-invoice.webp" alt="Накладная: роза подорожала вдвое" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Накладная с ростом цены</strong><p>Каждую накладную сверяет с прошлыми поставками. Роза подорожала вдвое, бот спросил, заметили ли.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-05">
-          <div class="ph"><img src="img/05-cash.webp" alt="Касса за смену: остаток, внесения, изъятия" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Касса за смену</strong><p>Остаток на начало и конец, внесения и изъятия с комментариями. Видно, куда ушли наличные.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-06">
-          <div class="ph"><img src="img/06-signals.webp" alt="Сигналы: пиковая дата, просадка выручки, негативный отзыв 2ГИС" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Аналитика</span><strong>Сигналы</strong><p>Напоминает о пиковых датах прошлого года, бьёт тревогу при просадке выручки, присылает отзывы 2ГИС.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-07">
-          <div class="ph"><img src="img/07-shift.webp" alt="Бот табеля: смена открыта, вопрос про закрытие смены" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Табель <i>пример</i></span><strong>Отметка смены</strong><p>Сотрудник нажимает кнопку, бот проверяет геолокацию и время. Опоздание считается само. Забыл закрыть: бот спросит.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-08">
-          <div class="ph"><img src="img/08-boss.webp" alt="Ответ бота управляющей: кто на смене, сводка за неделю" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Табель <i>пример</i></span><strong>Кто на смене</strong><p>Управляющая спрашивает, бот отвечает: кто вышел, кто опаздывает, кто отработал. Раз в неделю часы по каждому.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-09">
-          <div class="ph"><img src="img/09-schedule.webp" alt="Мини-приложение: график сотрудников на месяц" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Табель <i>пример</i></span><strong>График на месяц</strong><p>Управляющая ставит смены касанием, есть шаблоны 2/2 и Пн–Пт. Сохраняется в таблицу.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-10">
-          <div class="ph"><img src="img/10-me.webp" alt="Мини-приложение сотрудника: самозапись на следующий месяц" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Табель <i>пример</i></span><strong>Самозапись сотрудника</strong><p>Сотрудник сам отмечает дни на следующий месяц и видит, сколько коллег уже записалось.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-11">
-          <div class="ph"><img src="img/11-requests.webp" alt="Мини-приложение управляющей: покрытие смен по дням" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Табель <i>пример</i></span><strong>Покрытие по дням</strong><p>Светофор по ролям: где не хватает людей, где перебор. Одна кнопка утверждает месяц.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-12">
-          <div class="ph"><img src="img/12-cards.webp" alt="Бот: клиентов перестали заносить в базу, по менеджерам" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Возврат покупателей</span><strong>База покупателей</strong><p>Видит, кто из менеджеров не прикрепил клиента к заказу. И честно говорит, когда возврат ещё нельзя считать.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-13">
-          <div class="ph"><img src="img/13-why.webp" alt="Разбор переписок: почему не купили" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Переписки</span><strong>Почему не купили</strong><p>Разбор диалогов за неделю: причина отказа по каждому и что менеджер упустил.</p></figcaption>
-        </figure>
-
-        <figure class="slide" id="sl-14">
-          <div class="ph"><img src="img/14-reqs.webp" alt="Бот: в счёте карта не из рабочего списка; новый отзыв 2ГИС" width="390" height="800" loading="lazy"></div>
-          <figcaption><span class="g">Переписки</span><strong>Карта в счёте и отзывы</strong><p>Если в счёте карта не из рабочего списка, бот пишет в тот же час. Отзывы 2ГИС приходят в группу.</p></figcaption>
-        </figure>
-
-      </div>
-      <div class="nav">
-        <span class="cnt" id="cnt">1 / 14</span>
-        <span class="dots" id="dots" aria-hidden="true"></span>
-        <span class="arrows"><button type="button" id="prev" aria-label="Назад">‹</button><button type="button" id="next" aria-label="Вперёд">›</button></span>
-      </div>
+📊 Среднее за 7 дней: 🟢 +26%
+<span class="time">09:06</span></div>
+      <div class="bubble alert">
+<b>🚨 2ГИС: негативный отзыв, нужен ответ</b>
+⭐ <i class="m">Покупатель</i> (05.10)
+Я заказывал именно то, что было показано на фото… получил совсем не то, за что заплатил.
+<span class="time">18:30</span></div>
     </div>
   </section>
 
@@ -253,12 +145,11 @@ section{display:flex;flex-direction:column;gap:20px;}
     </ul>
   </section>
 
-  <section id="prices">
+  <section>
     <span class="eyebrow">Модули и цены</span>
     <h2>Берёте то, что нужно сейчас, остальное добавляете потом</h2>
     <div class="mods">
       <article class="mod first">
-        <a class="shot" href="#sl-07" title="Посмотреть экраны табеля"><img src="img/07-shift.webp" alt="" width="390" height="800"><span>экраны</span></a>
         <span class="tag">с любой кассой</span>
         <h3>Табель</h3>
         <ul>
@@ -270,7 +161,6 @@ section{display:flex;flex-direction:column;gap:20px;}
         <div class="price"><span>30 000 ₸ в месяц<small>подключение 30 000 ₸</small></span></div>
       </article>
       <article class="mod">
-        <a class="shot" href="#sl-01" title="Посмотреть сообщения аналитики"><img src="img/01-report.webp" alt="" width="390" height="800"><span>экраны</span></a>
         <span class="tag">основа</span>
         <h3>Аналитика</h3>
         <ul>
@@ -282,7 +172,6 @@ section{display:flex;flex-direction:column;gap:20px;}
         <div class="price"><span>50 000 ₸ в месяц<small>подключение 50 000 ₸</small></span></div>
       </article>
       <article class="mod">
-        <a class="shot" href="#sl-12" title="Посмотреть сообщения про базу покупателей"><img src="img/12-cards.webp" alt="" width="390" height="800"><span>экраны</span></a>
         <span class="tag">к аналитике</span>
         <h3>Возврат покупателей</h3>
         <ul>
@@ -294,7 +183,6 @@ section{display:flex;flex-direction:column;gap:20px;}
         <div class="price"><span>70 000 ₸ в месяц<small>подключение 100 000 ₸</small></span></div>
       </article>
       <article class="mod">
-        <a class="shot" href="#sl-13" title="Посмотреть разбор переписок"><img src="img/13-why.webp" alt="" width="390" height="800"><span>экраны</span></a>
         <span class="tag">к аналитике</span>
         <h3>Переписки</h3>
         <ul>
@@ -312,7 +200,7 @@ section{display:flex;flex-direction:column;gap:20px;}
     <p class="note">Подключение всего пакета 150 000 ₸ вместо 180 000 ₸. Возврат покупателей и переписки работают через WhatsApp Business: сами сообщения Meta списывает с вашей карты напрямую. Аналитика работает с Posiflora, МойСклад и Posterix, табелю касса не нужна.</p>
   </section>
 
-  <section id="start">
+  <section>
     <span class="eyebrow">Как начать</span>
     <h2>Сначала бесплатный разбор вашей кассы</h2>
     <ol class="steps">
@@ -327,49 +215,5 @@ section{display:flex;flex-direction:column;gap:20px;}
   </section>
 
 </div>
-
-<script>
-(function(){
-  var track=document.getElementById('track'), slides=[].slice.call(track.querySelectorAll('.slide'));
-  var dots=document.getElementById('dots'), cnt=document.getElementById('cnt'), chips=document.getElementById('chips');
-  slides.forEach(function(){ var i=document.createElement('i'); dots.appendChild(i); });
-  var dotEls=[].slice.call(dots.children), cur=0, groups={};
-  slides.forEach(function(s,i){ var g=s.querySelector('.g').firstChild.textContent.trim(); if(!(g in groups)) groups[g]=i; });
-
-  function index(){
-    var x=track.scrollLeft, best=0, bd=1e9;
-    slides.forEach(function(s,i){ var d=Math.abs(s.offsetLeft-18-x); if(d<bd){bd=d;best=i;} });
-    return best;
-  }
-  function paint(){
-    cur=index();
-    dotEls.forEach(function(d,i){ d.classList.toggle('on',i===cur); });
-    cnt.textContent=(cur+1)+' / '+slides.length;
-    var g=slides[cur].querySelector('.g').firstChild.textContent.trim();
-    [].forEach.call(chips.children,function(b){ b.setAttribute('aria-pressed', b.textContent===g ? 'true':'false'); });
-  }
-  function go(i){
-    i=Math.max(0,Math.min(slides.length-1,i));
-    track.scrollTo({left:slides[i].offsetLeft-18,behavior:'smooth'});
-  }
-  var t; track.addEventListener('scroll',function(){ clearTimeout(t); t=setTimeout(paint,80); },{passive:true});
-  document.getElementById('prev').addEventListener('click',function(){ go(cur-1); });
-  document.getElementById('next').addEventListener('click',function(){ go(cur+1); });
-  chips.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b) return;
-    var s=document.getElementById(b.getAttribute('data-go')); go(slides.indexOf(s));
-  });
-  // ссылки из модулей: вертикально к блоку, горизонтально к нужному слайду
-  document.querySelectorAll('a.shot').forEach(function(a){
-    a.addEventListener('click',function(e){
-      e.preventDefault();
-      var s=document.querySelector(a.getAttribute('href'));
-      document.getElementById('look').scrollIntoView({behavior:'smooth',block:'start'});
-      setTimeout(function(){ go(slides.indexOf(s)); },350);
-    });
-  });
-  paint();
-})();
-</script>
 </body>
 </html>
