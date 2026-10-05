@@ -53,6 +53,17 @@
 .shots figcaption{font-size:14px;line-height:1.45;color:var(--muted);}
 .shots figcaption b{color:var(--ink);}
 @media (min-width:700px){.shots{grid-auto-flow:row;grid-template-columns:repeat(4,1fr);grid-auto-columns:auto;overflow:visible;}}
+
+.lead-sm{font-size:16.5px;line-height:1.6;max-width:64ch;}
+.was-now{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.was-now > div{border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;}
+.was{background:var(--surface);border:1px solid var(--line);}
+.now{background:var(--accent-soft);border:1px solid var(--accent);}
+.wn-tag{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.now .wn-tag{color:var(--accent);}
+.was-now ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;}
+.was ul{color:var(--muted);}
+@media (max-width:560px){.was-now{grid-template-columns:1fr;}}
 </style>
 <title>Бастык для магазина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -196,7 +207,26 @@ CTR 1,9% · клик $0,07
   <section id="tabel">
     <span class="eyebrow">Табель</span>
     <h2>Смены, опоздания и график без таблиц</h2>
-    <p class="note">Сотрудник отмечает смену в телеграме, бот сам считает часы и опоздания. Касса для табеля не нужна. Экраны настоящие, сотрудники условные.</p>
+    <p class="lead-sm">Мы сделали табель для своего магазина, потому что сами в этом жили. Кто во сколько пришёл, смотрели по камерам. Смены записывали в тетрадку. Сотрудники не понимали, как считается их зарплата. А на составление графика каждый месяц уходили часы.</p>
+    <div class="was-now">
+      <div class="was"><span class="wn-tag">Как обычно</span>
+        <ul>
+          <li>опоздания ищут по камерам</li>
+          <li>смены в тетрадке или в чате</li>
+          <li>зарплату считают руками по формулам</li>
+          <li>на график каждый месяц уходят часы</li>
+        </ul>
+      </div>
+      <div class="now"><span class="wn-tag">С ботом</span>
+        <ul>
+          <li>сотрудник отмечает смену в телеграме, опоздание видно сразу</li>
+          <li>часы за день и неделю бот считает сам</li>
+          <li>зарплата считается из смен, каждый видит, откуда сумма</li>
+          <li>сотрудники сами записываются в график, он приходит на согласование управляющей или собственнику</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Касса для табеля не нужна. Экраны ниже настоящие, сотрудники условные.</p>
     <div class="shots">
       <figure><img src="img/07-shift.webp" alt="Сотрудник открывает смену, бот пишет время и опоздание" width="390" height="800" loading="lazy"><figcaption><b>Сотрудник</b> отправляет геопозицию, смена открыта. Опоздание бот считает сам. Забыл закрыть смену, бот спросит.</figcaption></figure>
       <figure><img src="img/08-boss.webp" alt="Управляющая видит, кто на смене, и недельную сводку" width="390" height="800" loading="lazy"><figcaption><b>Владелец</b> одной кнопкой видит, кто на смене и кто опаздывает. По понедельникам сводка часов за неделю.</figcaption></figure>
