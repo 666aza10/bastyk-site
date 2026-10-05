@@ -8,7 +8,44 @@
 <meta property="og:description" content="Каждый день смотрит в кассу и пишет, где уходят деньги. Бесплатный разбор вашей кассы за 3 дня.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bastyk.kz/">
-<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}
+/* hero + анимированный телефон */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;align-items:center;}
+.hero-txt{display:flex;flex-direction:column;gap:18px;}
+@media (min-width:860px){.hero{grid-template-columns:1.1fr .9fr;gap:48px;}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;align-self:flex-start;background:var(--accent);color:var(--bg);text-decoration:none;border-radius:12px;padding:14px 20px;font:700 15px/1 var(--body);}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
+.cta-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+.btn.wa{background:#1FA855;color:#fff;}
+.btn.tg-btn{background:#2A8BD8;color:#fff;}
+.phone-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.phone{width:min(330px,88vw);height:600px;background:#151a17;border-radius:42px;padding:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow:hidden;
+  --tg-bg:#dde6d4;--tg-bot:#ffffff;--tg-me:#e1f7cf;--tg-ink:#121a14;--tg-sub:#6d7a71;}
+.ph-top{background:#f6f7f5;border-radius:32px 32px 0 0;padding:14px 14px 10px;display:flex;align-items:center;gap:10px;color:var(--tg-ink);}
+.ph-back{font-size:26px;line-height:1;color:#2A8BD8;width:18px;}
+.ph-title{flex:1;text-align:center;line-height:1.2;}
+.ph-title b{display:block;font:700 15px var(--body);}
+.ph-title small{font-size:12px;color:var(--tg-sub);}
+.ph-ava{width:34px;height:34px;border-radius:50%;background:#2F6B4F;color:#fff;display:grid;place-items:center;font:700 14px var(--display);}
+.ph-feed{flex:1 1 0;min-height:0;overflow:hidden;background:var(--tg-bg);display:flex;flex-direction:column;justify-content:flex-end;gap:7px;padding:10px 10px 12px;}
+.ph-input{background:#f6f7f5;border-radius:0 0 32px 32px;padding:12px 18px 16px;color:var(--tg-sub);font-size:14px;}
+.m{white-space:pre-line;max-width:86%;padding:8px 11px 16px;border-radius:14px;font:400 13px/1.42 var(--body);color:var(--tg-ink);position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08);font-variant-numeric:tabular-nums;flex:none;}
+.m b{font-weight:700;}
+.m i{position:absolute;right:9px;bottom:3px;font:500 10px var(--mono);color:var(--tg-sub);font-style:normal;}
+.m.bot{background:var(--tg-bot);align-self:flex-start;border-bottom-left-radius:4px;}
+.m.me{background:var(--tg-me);align-self:flex-end;border-bottom-right-radius:4px;}
+.m.alert{box-shadow:inset 3px 0 0 #D0492F,0 1px 1px rgba(0,0,0,.08);}
+.m.typing{padding:10px 14px;gap:4px;display:none;}
+.m.typing span{width:7px;height:7px;border-radius:50%;background:#9aa69e;animation:dot 1s infinite;}
+.m.typing span:nth-child(2){animation-delay:.15s}.m.typing span:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.js .ph-feed .m{display:none;}
+.js .ph-feed .m.on{display:block;animation:pop .35s ease-out;}
+.js .ph-feed .m.typing.on{display:flex;}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.ph-cap{font:500 12px/1.4 var(--mono);color:var(--muted);margin:0;}
+@media (prefers-reduced-motion:reduce){.m.typing span{animation:none}}
+</style>
 <title>Бастык для магазина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,43 +130,41 @@ section{display:flex;flex-direction:column;gap:20px;}
 <div class="wrap">
 
   <header class="hero">
-    <span class="eyebrow">Бастык · бот для владельца магазина</span>
-    <h1>Бот, который каждый день смотрит в вашу кассу и пишет, где уходят деньги</h1>
-    <p class="lead">Подключается к кассе, сам считает отчёты, табель и зарплату. Вы задаёте вопрос в телеграме и получаете ответ по своим цифрам.</p>
-    <div class="chat" aria-label="Пример сообщения бота">
-      <span class="who">бот · 10:02</span>
-      <span class="msg">Накладная от поставщика. Гвоздика <b>140 → 357 ₸</b>, рост в 2,5 раза. В карточке товара касса показывает, что цена не менялась.</span>
+    <div class="hero-txt">
+      <span class="eyebrow">Бастык · бот для владельца магазина</span>
+      <h1>Бот, который каждый день смотрит в вашу кассу и пишет, где уходят деньги</h1>
+      <p class="lead">Подключается к кассе, сам считает отчёты, табель и зарплату. Вы задаёте вопрос в телеграме и получаете ответ по своим цифрам.</p>
+      <a class="btn" href="#start">Хочу бесплатный разбор</a>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone" aria-label="Пример: так бот пишет в группу магазина">
+        <div class="ph-top"><span class="ph-back">‹</span><div class="ph-title"><b>Отчёты магазина</b><small id="ph-status">бот</small></div><span class="ph-ava">Б</span></div>
+        <div class="ph-feed" id="feed">
+          <div class="m bot"><b>🌹 Магазин · 04.10 (Вс)</b>
+💰 Выручка: 756 450 ₸ 🟢 +4%
+📦 Заказов: 41 · чек 18 450 ₸
+💹 Маржа 40% 🔴 −0,8 п.п.
+📇 С карточкой: 37 из 41
+👥 Повторных 7 из 38
+💸 Не оплачено: 7 заказов<i>09:06</i></div>
+          <div class="m bot"><b>📦 Накладная · Поставщик</b>
+🔴 Роза 40 см: 663 ₸ (было 323, +105%)
+🟢 Хризантема: 529 ₸ (−1%)
+⚠️ Роза подорожала вдвое. Цену продажи не меняли.<i>10:12</i></div>
+          <div class="m bot"><b>⏰ Табель</b>
+Данияр открыл смену в 09:14, опоздание 14 мин.
+На смене 3 из 4: Айгерим не отметилась.<i>10:15</i></div>
+          <div class="m me">Сколько списали за сентябрь?<i>12:40</i></div>
+          <div class="m bot">🗑 Списания за сентябрь: 41 200 ₸, это 0,6% выручки. Больше всего роза 40 см и эустома.<i>12:40</i></div>
+          <div class="m bot alert"><b>🚨 2ГИС: плохой отзыв, нужен ответ</b>
+⭐ «Получил совсем не то, что было на фото»<i>18:30</i></div>
+          <div class="m bot typing" id="typing"><span></span><span></span><span></span></div>
+        </div>
+        <div class="ph-input">Сообщение</div>
+      </div>
+      <p class="ph-cap">Пример переписки. Цифры условные.</p>
     </div>
   </header>
-
-  <section>
-    <span class="eyebrow">Утро владельца</span>
-    <h2>Так выглядят сообщения бота в группе магазина</h2>
-    <p class="note">Пример отчёта: так бот пишет каждое утро. Цифры условные.</p>
-    <div class="tg">
-      <div class="tg-head"><span class="ava">Б</span><div><b>Отчёты магазина</b><small>бот · группа</small></div></div>
-      <div class="bubble">
-<b>🌹 Магазин — 04.10 (Вс)</b>
-
-💰 Выручка: 756 450 ₸ 🟢 +4% к вчера
-📦 Заказов: 41
-🧾 Средний чек: 18 450 ₸
-💹 Маржа 40% 🔴 −0,8 п.п. к среднему за сентябрь
-   ⚠️ без закупочной цены: 5 позиций
-📇 С карточкой: 37 из 41 (90%)
-👥 Новых 31 · Повторных 7 (18%)
-📅 Сегодня к доставке: 13 заказов
-💸 Не оплачено: 7 заказов · 112 300 ₸
-
-📊 Среднее за 7 дней: 🟢 +26%
-<span class="time">09:06</span></div>
-      <div class="bubble alert">
-<b>🚨 2ГИС: негативный отзыв, нужен ответ</b>
-⭐ Айгерим (05.10)
-Я заказывал именно то, что было показано на фото… получил совсем не то, за что заплатил.
-<span class="time">18:30</span></div>
-    </div>
-  </section>
 
   <section>
     <span class="eyebrow">Что бот уже нашёл</span>
@@ -200,7 +235,7 @@ section{display:flex;flex-direction:column;gap:20px;}
     <p class="note">Подключение всего пакета 150 000 ₸ вместо 180 000 ₸. Возврат покупателей и переписки работают через WhatsApp Business: сами сообщения Meta списывает с вашей карты напрямую. Аналитика работает с Posiflora, МойСклад и Posterix, табелю касса не нужна.</p>
   </section>
 
-  <section>
+  <section id="start">
     <span class="eyebrow">Как начать</span>
     <h2>Сначала бесплатный разбор вашей кассы</h2>
     <ol class="steps">
@@ -209,11 +244,44 @@ section{display:flex;flex-direction:column;gap:20px;}
       <li><div><h3>Показываем три находки про ваши деньги</h3><p>Если они того стоят, подключаем бота. Если нет, вы ничего не платите.</p></div></li>
     </ol>
     <div class="cta">
-      <strong>Хотите разбор? Ответьте на это сообщение</strong>
-      <p class="note">Напишите, какая у вас касса и сколько точек.</p>
+      <strong>Хотите разбор? Напишите нам</strong>
+      <p class="note">Укажите, какая у вас касса и сколько точек. Ответим в течение дня.</p>
+      <div class="cta-btns">
+        <a class="btn wa" href="https://wa.me/77022652355?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80%20%D0%BA%D0%B0%D1%81%D1%81%D1%8B.%20%D0%9A%D0%B0%D1%81%D1%81%D0%B0%3A%20" target="_blank" rel="noopener">Написать в WhatsApp</a>
+        <a class="btn tg-btn" href="https://t.me/bastyq_bot?start=site" target="_blank" rel="noopener">Написать в Телеграм</a>
+      </div>
     </div>
   </section>
 
 </div>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var feed = document.getElementById('feed');
+  if (!feed || reduce) return;
+  document.documentElement.classList.add('js');
+  var msgs = [].slice.call(feed.querySelectorAll('.m:not(.typing)'));
+  var typing = document.getElementById('typing');
+  var status = document.getElementById('ph-status');
+  function show(el) { feed.appendChild(el); el.classList.add('on'); }
+  function run() {
+    msgs.forEach(function (m) { m.classList.remove('on'); });
+    var t = 600;
+    msgs.forEach(function (m) {
+      if (m.classList.contains('bot')) {
+        setTimeout(function () { status.textContent = 'печатает…'; show(typing); }, t);
+        t += 1100;
+        setTimeout(function () { typing.classList.remove('on'); status.textContent = 'бот'; show(m); }, t);
+        t += 1900;
+      } else {
+        setTimeout(function () { show(m); }, t);
+        t += 1300;
+      }
+    });
+    setTimeout(run, t + 4000);
+  }
+  run();
+})();
+</script>
 </body>
 </html>
