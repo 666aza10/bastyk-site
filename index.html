@@ -45,6 +45,14 @@
 @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 .ph-cap{font:500 12px/1.4 var(--mono);color:var(--muted);margin:0;}
 @media (prefers-reduced-motion:reduce){.m.typing span{animation:none}}
+
+/* табель: экраны */
+.shots{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,62%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;-webkit-overflow-scrolling:touch;}
+.shots figure{margin:0;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;}
+.shots img{display:block;width:100%;height:auto;border-radius:26px;border:7px solid #151a17;background:#151a17;box-shadow:0 18px 30px -22px rgba(0,0,0,.5);}
+.shots figcaption{font-size:14px;line-height:1.45;color:var(--muted);}
+.shots figcaption b{color:var(--ink);}
+@media (min-width:700px){.shots{grid-auto-flow:row;grid-template-columns:repeat(4,1fr);grid-auto-columns:auto;overflow:visible;}}
 </style>
 <title>Бастык для магазина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -154,6 +162,10 @@ section{display:flex;flex-direction:column;gap:20px;}
           <div class="m bot"><b>⏰ Табель</b>
 Данияр открыл смену в 09:14, опоздание 14 мин.
 На смене 3 из 4: Айгерим не отметилась.<i>10:15</i></div>
+          <div class="m bot"><b>📣 Реклама вчера</b>
+Расход $14,20 · 2,1% от выручки
+CTR 1,9% · клик $0,07
+🔴 «Бюджетные букеты»: клик $0,13, в 2,6 раза дороже «Лизиантуса». Переложить бюджет?<i>11:00</i></div>
           <div class="m me">Сколько списали за сентябрь?<i>12:40</i></div>
           <div class="m bot">🗑 Списания за сентябрь: 41 200 ₸, это 0,6% выручки. Больше всего роза 40 см и эустома.<i>12:40</i></div>
           <div class="m bot alert"><b>🚨 2ГИС: плохой отзыв, нужен ответ</b>
@@ -173,11 +185,24 @@ section{display:flex;flex-direction:column;gap:20px;}
       <li><span class="num">Карта</span><div><h3>Менеджер присылал покупателям свою карту</h3><p>Владелец заподозрил, что часть оплат уходит мимо кассы. Теперь бот читает переписку с покупателями и сразу пишет, если в счёте карта не из рабочего списка.</p></div></li>
       <li><span class="num">×2</span><div><h3>Себестоимость в кассе была завышена вдвое</h3><p>Ошибку нашли пересчётом по приходным накладным. Всё это время маржа считалась по неверной цифре.</p></div></li>
       <li><span class="num">×2,5</span><div><h3>Поставщик поднял цену и не предупредил</h3><p>Касса сравнивает с ценой в карточке товара, а не с прошлой закупкой. Бот сверяет каждую накладную с прошлыми поставками.</p></div></li>
+      <li><span class="num">×2,6</span><div><h3>Самая дорогая кампания съедала четверть бюджета</h3><p>Клик в ней стоил в 2,6 раза дороже, чем в лучшей кампании. Бот сравнивает кампании каждый день и показывает, куда переложить деньги без доплаты.</p></div></li>
       <li><span class="num">19 из 28</span><div><h3>Покупатели уходили, потому что нужного не было в наличии</h3><p>Бот разбирает переписки, где человек не купил, и показывает причину. Закуп видит, что брать, а не гадает.</p></div></li>
       <li><span class="num">2% → 30%</span><div><h3>Сотрудники начали заводить карточки клиентов</h3><p>Каждый день бот показывает, кто из менеджеров не прикрепил клиента к заказу. Год назад карточка была у 2% заказов, сейчас у 30%.</p></div></li>
       <li><span class="num">Табель</span><div><h3>Сотрудник отработал смену, а в зарплату не попал</h3><p>Управляющая вписывала формулу руками в клетку каждого, кто вышел, и однажды пропустила человека. Теперь бот сам видит, кто был на смене, и проставляет это в зарплатную таблицу.</p></div></li>
       <li><span class="num">8 из 10</span><div><h3>Покупатели приходили один раз и не возвращались</h3><p>Касса этого не показывает, для неё каждый заказ новый. Бот считает повторные покупки и возвращает людей рассылками.</p></div></li>
     </ul>
+  </section>
+
+  <section id="tabel">
+    <span class="eyebrow">Табель</span>
+    <h2>Смены, опоздания и график без таблиц</h2>
+    <p class="note">Сотрудник отмечает смену в телеграме, бот сам считает часы и опоздания. Касса для табеля не нужна. Экраны настоящие, сотрудники условные.</p>
+    <div class="shots">
+      <figure><img src="img/07-shift.webp" alt="Сотрудник открывает смену, бот пишет время и опоздание" width="390" height="800" loading="lazy"><figcaption><b>Сотрудник</b> отправляет геопозицию, смена открыта. Опоздание бот считает сам. Забыл закрыть смену, бот спросит.</figcaption></figure>
+      <figure><img src="img/08-boss.webp" alt="Управляющая видит, кто на смене, и недельную сводку" width="390" height="800" loading="lazy"><figcaption><b>Владелец</b> одной кнопкой видит, кто на смене и кто опаздывает. По понедельникам сводка часов за неделю.</figcaption></figure>
+      <figure><img src="img/09-schedule.webp" alt="График смен на месяц" width="390" height="800" loading="lazy"><figcaption><b>График</b> на месяц в телефоне: касание включает смену, есть шаблоны 2/2 и Пн–Пт.</figcaption></figure>
+      <figure><img src="img/10-me.webp" alt="Сотрудник сам записывается на смены" width="390" height="800" loading="lazy"><figcaption><b>Самозапись</b>: сотрудники сами отмечают удобные дни, управляющая утверждает.</figcaption></figure>
+    </div>
   </section>
 
   <section>
@@ -202,6 +227,7 @@ section{display:flex;flex-direction:column;gap:20px;}
           <li>отчёт за день, неделю и месяц</li>
           <li>ответы на вопросы по вашим цифрам</li>
           <li>контроль закупа и накладных</li>
+          <li>реклама в Facebook и Instagram: расход, доля от выручки, какая кампания тратит зря</li>
           <li>сигнал, если точка затихла или касса не сошлась</li>
         </ul>
         <div class="price"><span>50 000 ₸ в месяц<small>подключение 50 000 ₸</small></span></div>
