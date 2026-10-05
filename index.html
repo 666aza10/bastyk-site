@@ -64,6 +64,14 @@
 .was-now ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;}
 .was ul{color:var(--muted);}
 @media (max-width:560px){.was-now{grid-template-columns:1fr;}}
+
+.mod{position:relative;}
+.mod.hit{border:2px solid var(--accent);box-shadow:0 14px 30px -20px rgba(47,107,79,.55);}
+.badge{position:absolute;top:-12px;right:16px;background:var(--accent);color:var(--bg);font:700 12px/1 var(--body);padding:7px 11px;border-radius:999px;letter-spacing:.02em;}
+.wa-group{border:1px dashed var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;background:color-mix(in srgb,var(--surface) 50%,transparent);}
+.wa-head{display:flex;flex-direction:column;gap:6px;}
+.wa-head p{font-size:14px;color:var(--muted);}
+.wa-head .tag{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warn);}
 </style>
 <title>Бастык для магазина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -239,19 +247,9 @@ CTR 1,9% · клик $0,07
     <span class="eyebrow">Модули и цены</span>
     <h2>Берёте то, что нужно сейчас, остальное добавляете потом</h2>
     <div class="mods">
-      <article class="mod first">
-        <span class="tag">с любой кассой</span>
-        <h3>Табель</h3>
-        <ul>
-          <li>сотрудники отмечают смену в телеграме</li>
-          <li>опоздания видно сразу</li>
-          <li>график на месяц, сотрудники записываются сами</li>
-          <li>зарплата считается без формул</li>
-        </ul>
-        <div class="price"><span>30 000 ₸ в месяц<small>подключение 30 000 ₸</small></span></div>
-      </article>
-      <article class="mod">
-        <span class="tag">основа</span>
+      <article class="mod hit">
+        <span class="badge">★ Главное</span>
+        <span class="tag">основа · с этого начинают</span>
         <h3>Аналитика</h3>
         <ul>
           <li>отчёт за день, неделю и месяц</li>
@@ -263,32 +261,51 @@ CTR 1,9% · клик $0,07
         <div class="price"><span>50 000 ₸ в месяц<small>подключение 50 000 ₸</small></span></div>
       </article>
       <article class="mod">
-        <span class="tag">к аналитике</span>
-        <h3>Возврат покупателей</h3>
+        <span class="tag">с любой кассой</span>
+        <h3>Табель</h3>
         <ul>
-          <li>анкета важных дат: дни рождения, годовщины</li>
-          <li>напоминание за неделю до праздника</li>
-          <li>сообщение через месяц после первой покупки</li>
-          <li>считаем, кто купил после нашего сообщения</li>
+          <li>сотрудники отмечают смену в телеграме</li>
+          <li>опоздания видно сразу</li>
+          <li>график на месяц, сотрудники записываются сами</li>
+          <li>зарплата считается без формул</li>
         </ul>
-        <div class="price"><span>70 000 ₸ в месяц<small>подключение 100 000 ₸</small></span></div>
+        <div class="price"><span>30 000 ₸ в месяц<small>подключение 30 000 ₸</small></span></div>
       </article>
-      <article class="mod">
-        <span class="tag">к аналитике</span>
-        <h3>Переписки</h3>
-        <ul>
-          <li>почему не купили: причина по каждому диалогу</li>
-          <li>скорость ответа менеджеров</li>
-          <li>проверка карты в каждом счёте</li>
-        </ul>
-        <div class="price"><span>30 000 ₸ в месяц<small>без подключения</small></span></div>
-      </article>
+    </div>
+    <div class="wa-group">
+      <div class="wa-head">
+        <span class="tag">через WhatsApp Business API</span>
+        <p>Эти два модуля работают с WhatsApp магазина. Для них нужен провайдер WhatsApp Business API: подключаем его вместе с вами. Тариф провайдера и сами сообщения (их списывает Meta с вашей карты) оплачиваются отдельно от Бастыка.</p>
+      </div>
+      <div class="mods">
+        <article class="mod">
+          <span class="tag">к аналитике</span>
+          <h3>Возврат покупателей</h3>
+          <ul>
+            <li>анкета важных дат: дни рождения, годовщины</li>
+            <li>напоминание за неделю до праздника</li>
+            <li>сообщение через месяц после первой покупки</li>
+            <li>считаем, кто купил после нашего сообщения</li>
+          </ul>
+          <div class="price"><span>70 000 ₸ в месяц<small>подключение 100 000 ₸</small></span></div>
+        </article>
+        <article class="mod">
+          <span class="tag">к аналитике</span>
+          <h3>Переписки</h3>
+          <ul>
+            <li>почему не купили: причина по каждому диалогу</li>
+            <li>скорость ответа менеджеров</li>
+            <li>проверка карты в каждом счёте</li>
+          </ul>
+          <div class="price"><span>30 000 ₸ в месяц<small>без подключения</small></span></div>
+        </article>
+      </div>
     </div>
     <div class="bundle">
       <div><h3>Всё вместе</h3><p>Табель, аналитика, возврат покупателей и переписки</p></div>
       <div class="big">150 000 ₸/мес<s>180 000</s></div>
     </div>
-    <p class="note">Подключение всего пакета 150 000 ₸ вместо 180 000 ₸. Возврат покупателей и переписки работают через WhatsApp Business: сами сообщения Meta списывает с вашей карты напрямую. Аналитика работает с Posiflora, МойСклад и Posterix, табелю касса не нужна.</p>
+    <p class="note">Подключение всего пакета 150 000 ₸ вместо 180 000 ₸. Аналитика работает с Posiflora, МойСклад и Posterix, табелю касса не нужна.</p>
   </section>
 
   <section id="start">
