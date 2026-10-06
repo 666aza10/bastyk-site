@@ -356,5 +356,15 @@ CTR 1,9% · клик $0,07
   run();
 })();
 </script>
+<script>
+(function(){
+  // Метка источника с хаба (?from=hub_th и т.п.) уходит в /start бота.
+  var f = new URLSearchParams(location.search).get('from');
+  if (!f || !/^[a-z0-9_]{1,24}$/.test(f)) return;
+  document.querySelectorAll('a[href*="t.me/bastyq_bot?start=site"]').forEach(function(a){
+    a.href = a.href.replace('start=site', 'start=' + f);
+  });
+})();
+</script>
 </body>
 </html>
