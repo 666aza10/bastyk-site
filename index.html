@@ -151,6 +151,18 @@ section{display:flex;flex-direction:column;gap:20px;}
   .finds li{grid-template-columns:1fr;gap:6px;}
 }
 </style>
+<!-- Meta Pixel (набор данных в бизнесе Bastyk): просмотры и заявки с рекламы -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1771362766989375');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1771362766989375&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 
@@ -366,6 +378,26 @@ CTR 1,9% · клик $0,07
   if (!f || !/^[a-z0-9_]{1,24}$/.test(f)) return;
   document.querySelectorAll('a[href*="t.me/bastyq_bot?start=site"]').forEach(function(a){
     a.href = a.href.replace('start=site', 'start=' + f);
+  });
+})();
+</script>
+<script>
+(function(){
+  // С рекламы (?from=ad_...) ролики говорят про любого владельца, не только магазин:
+  // меняем подпись над заголовком и сам заголовок, остальное как есть.
+  var f = new URLSearchParams(location.search).get('from') || '';
+  if (/^ad_/.test(f)) {
+    var eb = document.querySelector('.hero .eyebrow');
+    if (eb) eb.textContent = 'Бастык · бот для владельца бизнеса';
+    var h = document.querySelector('.hero h1');
+    if (h) h.textContent = 'Бот, который каждый день смотрит в вашу кассу и CRM и пишет, где уходят деньги';
+    document.title = 'Бастык для владельца';
+  }
+  // Заявка = нажал «написать» в WhatsApp или Телеграм. Это событие Lead для рекламы.
+  document.querySelectorAll('a[href*="wa.me/"], a[href*="t.me/bastyq_bot"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.fbq) fbq('track', 'Lead', { content_name: /wa\.me/.test(a.href) ? 'whatsapp' : 'telegram', content_category: f || 'direct' });
+    });
   });
 })();
 </script>
