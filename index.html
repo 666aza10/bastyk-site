@@ -392,6 +392,28 @@ CTR 1,9% · клик $0,07
     var h = document.querySelector('.hero h1');
     if (h) h.textContent = 'Бот, который каждый день смотрит в вашу кассу и CRM и пишет, где уходят деньги';
     document.title = 'Бастык для владельца';
+    // Без лишнего шага: кнопка первого экрана сразу открывает бота с меткой,
+    // а внизу экрана всегда видна кнопка WhatsApp.
+    var cta = document.querySelector('.hero .btn[href="#start"]');
+    if (cta) {
+      cta.href = 'https://t.me/bastyq_bot?start=' + f;
+      cta.target = '_blank';
+      cta.rel = 'noopener';
+      cta.textContent = 'Хочу бесплатный разбор в Телеграм';
+    }
+    var wa = document.querySelector('a.btn.wa');
+    if (wa) {
+      var bar = document.createElement('a');
+      bar.href = wa.href;
+      bar.target = '_blank';
+      bar.rel = 'noopener';
+      bar.textContent = 'Написать в WhatsApp';
+      bar.setAttribute('style', 'position:fixed;left:16px;right:16px;bottom:16px;z-index:50;display:block;text-align:center;' +
+        'padding:16px;border-radius:14px;background:#0B7A3E;color:#fff;font-weight:700;font-size:17px;text-decoration:none;' +
+        'box-shadow:0 8px 24px rgba(0,0,0,.25)');
+      document.body.appendChild(bar);
+      document.body.style.paddingBottom = '84px';
+    }
   }
   // Заявка = нажал «написать» в WhatsApp или Телеграм. Это событие Lead для рекламы.
   document.querySelectorAll('a[href*="wa.me/"], a[href*="t.me/bastyq_bot"]').forEach(function(a){
