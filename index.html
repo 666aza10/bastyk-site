@@ -260,7 +260,7 @@ CTR 1,9% · клик $0,07
       <a class="btn" href="/tabel/">Как работает табель</a>
   </section>
 
-  <section>
+  <section id="prices">
     <span class="eyebrow">Модули и цены</span>
     <h2>Берёте то, что нужно сейчас, остальное добавляете потом</h2>
     <div class="mods">
@@ -427,7 +427,36 @@ CTR 1,9% · клик $0,07
       cta.href = 'https://t.me/bastyq_bot?start=' + f;
       cta.target = '_blank';
       cta.rel = 'noopener';
-      cta.textContent = 'Хочу бесплатный разбор в Телеграм';
+      cta.textContent = 'Хочу 7 дней бесплатно';
+    }
+    // Цену с рекламы не показываем до того, как человек увидел свои цифры:
+    // вместо прайса и разбора — бесплатная неделя отчётов и бесплатное подключение.
+    var pr = document.getElementById('prices');
+    if (pr) {
+      pr.querySelectorAll('.price, .bundle, .note').forEach(function(el){ el.style.display = 'none'; });
+      var peb = pr.querySelector('.eyebrow');
+      if (peb) peb.textContent = 'Что умеет Бастык';
+      var ph = pr.querySelector('h2');
+      if (ph) ph.textContent = 'Начинают с аналитики, остальное добавляют потом';
+    }
+    var st = document.getElementById('start');
+    if (st) {
+      var sh = st.querySelector('h2');
+      if (sh) sh.textContent = 'Первые 7 дней отчёты бесплатно';
+      var steps = st.querySelectorAll('.steps li');
+      var txt = [
+        ['Вы даёте ключ доступа к кассе', 'Бот только читает данные и ничего в кассе не меняет. Ваши цифры видим только мы. Ключ можно отозвать в любой момент.'],
+        ['Подключаем за один день', 'Для первых 10 владельцев с рекламы подключение бесплатно.'],
+        ['Неделю бот каждое утро присылает отчёт', 'И показывает, где уходят деньги. Понравится, остаётесь. Нет, вы ничего не платите.']
+      ];
+      steps.forEach(function(li, i){
+        if (!txt[i]) return;
+        var h3 = li.querySelector('h3'), p = li.querySelector('p');
+        if (h3) h3.textContent = txt[i][0];
+        if (p) p.textContent = txt[i][1];
+      });
+      var cs = st.querySelector('.cta strong');
+      if (cs) cs.textContent = 'Хотите 7 дней бесплатно? Напишите нам';
     }
     var wa = document.querySelector('a.btn.wa');
     if (wa) {
