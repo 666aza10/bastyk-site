@@ -412,6 +412,26 @@ src="https://www.facebook.com/tr?id=1771362766989375&ev=PageView&noscript=1"/></
   run();
 })();
 (function(){
+  // С рекламы (?from=ad_...): кнопка первого экрана сразу в WhatsApp с меткой источника,
+  // внизу экрана всегда видна кнопка. Без лишнего шага, заявки видны Азамату по метке.
+  var f = new URLSearchParams(location.search).get('from') || '';
+  if (!/^ad_[a-z0-9_]{1,20}$/.test(f)) return;
+  var wa = document.querySelector('a.btn.wa');
+  if (!wa) return;
+  wa.href = wa.href.replace(/text=([^&]*)/, function(m, t){
+    return 'text=' + encodeURIComponent(decodeURIComponent(t).replace('Здравствуйте!', 'Здравствуйте! (Бастык, реклама ' + f + ')'));
+  });
+  var cta = document.querySelector('.hero .btn[href="#start"]');
+  if (cta) { cta.href = wa.href; cta.target = '_blank'; cta.rel = 'noopener'; cta.textContent = 'Написать в WhatsApp'; }
+  var bar = document.createElement('a');
+  bar.href = wa.href; bar.target = '_blank'; bar.rel = 'noopener'; bar.textContent = 'Написать в WhatsApp';
+  bar.setAttribute('style', 'position:fixed;left:16px;right:16px;bottom:16px;z-index:50;display:block;text-align:center;' +
+    'padding:16px;border-radius:14px;background:#0B7A3E;color:#fff;font-weight:700;font-size:17px;text-decoration:none;' +
+    'box-shadow:0 8px 24px rgba(0,0,0,.25)');
+  document.body.appendChild(bar);
+  document.body.style.paddingBottom = '84px';
+})();
+(function(){
   // Метка источника (?from=...) уходит в /start бота; клик «написать» = Lead для рекламы.
   var f = new URLSearchParams(location.search).get('from') || '';
   if (/^[a-z0-9_]{1,24}$/.test(f)) {
