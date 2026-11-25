@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бастык: ИИ-агент за работой</title>
+<meta name="description" content="Живой экран ИИ-агента: заказы приходят, агент проверяет, дополняет и принимает сам. Воспроизведение настоящего журнала.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F7F4;--surface:#fff;--ink:#18211C;--muted:#5B6760;--line:#DDE3DE;--accent:#2F6B4F;--accent-soft:#E3EEE7;--warn:#D9602F;
+  --term:#0f1813;--term-line:#2a3d32;--term-ink:#eef4ef;--term-dim:#8fa597;--term-ok:#8fd6ae;--term-warn:#ff8a5c;
+  --sans:"Onest","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:22px 0;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px}
+.brand i{width:34px;height:34px;border-radius:9px;background:var(--accent);display:inline-block}
+.hero{padding:26px 0 30px;max-width:760px}
+.hero h1{font-size:clamp(30px,5.4vw,54px);line-height:1.08;font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin-top:16px;font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:620px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.stat b{display:block;font-size:clamp(30px,5vw,46px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:6px;font-size:14px;color:var(--muted)}
+.stat.w b{color:var(--warn)} .stat.a b{color:var(--accent)}
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.term{background:var(--term);border-radius:18px;border:1px solid var(--term-line);overflow:hidden;box-shadow:0 18px 50px -24px rgba(20,40,30,.55)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 18px;border-bottom:1px solid var(--term-line);font-family:var(--mono);font-size:13px;color:var(--term-dim)}
+.bar .live{color:var(--term-ok);font-weight:700}
+.bar .live::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--term-ok);margin-right:8px;animation:p 1.4s infinite}
+@keyframes p{50%{opacity:.25}}
+#clock{color:var(--term-ink);font-weight:700;font-size:15px}
+#feed{height:480px;overflow:hidden;padding:12px 18px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.l{font-family:var(--mono);font-size:14px;line-height:1.55;color:var(--term-ink);animation:in .25s ease-out;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes in{from{opacity:0;transform:translateX(-10px)}}
+.l .tm{color:var(--term-dim);margin-right:10px}.l .no{color:var(--term-ok);font-weight:700}
+.l.mu{color:var(--term-dim);padding-left:76px}.l.ok{color:var(--term-ok)}.l.hd{color:var(--term-warn)}
+.ctl{display:flex;gap:8px;align-items:center;padding:11px 18px;border-top:1px solid var(--term-line);font-size:13px;color:var(--term-dim)}
+.ctl button{font:inherit;font-family:var(--mono);background:transparent;color:var(--term-dim);border:1px solid var(--term-line);border-radius:8px;padding:5px 11px;cursor:pointer}
+.ctl button.on{background:var(--term-ok);color:#0f1813;border-color:var(--term-ok);font-weight:700}
+.orders{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;min-height:560px}
+.orders h2{font-size:15px;color:var(--muted);font-weight:500;padding:4px 6px 10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:10px;animation:in .3s ease-out}
+.card b{font-size:17px}.card small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.pill{font-size:13px;font-weight:700;padding:5px 11px;border-radius:99px;white-space:nowrap}
+.pill.n{background:#eef1ee;color:var(--muted)}.pill.d{background:#fff3c8;color:#7a5b00}
+.pill.ok{background:var(--accent-soft);color:var(--accent)}.pill.h{background:#fde6dc;color:var(--warn)}
+.note{margin:16px 0 8px;font-size:13px;color:var(--muted)}
+.cta{margin:30px 0 70px;background:var(--accent);color:#fff;border-radius:22px;padding:34px 28px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.cta h3{font-size:clamp(24px,3.6vw,34px);line-height:1.15;max-width:560px}
+.cta p{opacity:.85;margin-top:8px}
+.btn{background:#fff;color:var(--accent);font-weight:800;font-size:18px;padding:16px 26px;border-radius:14px;text-decoration:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="brand"><i></i>Бастык</div></header>
+  <section class="hero">
+    <h1>Заказы приходят. <em>Агент принимает сам.</em></h1>
+    <p>Это не картинка. Ниже идёт воспроизведение настоящего журнала ИИ-агента сети доставки суши: вечер пятницы, 20 ноября. Нажми скорость, чтобы увидеть как в реальном времени.</p>
+  </section>
+  <div class="stats">
+    <div class="stat a"><b id="c1">0</b><span>заказов обработано</span></div>
+    <div class="stat a"><b id="c2">0</b><span>принято</span></div>
+    <div class="stat w"><b id="c3">0</b><span>оставлено людям</span></div>
+  </div>
+  <div class="grid">
+    <div class="term">
+      <div class="bar"><span class="live">агент · приём заказов</span><span id="clock">17:20:11</span></div>
+      <div id="feed"></div>
+      <div class="ctl">Скорость:
+        <button data-s="1">в реальном времени</button><button data-s="8" class="on">×8</button><button data-s="30">×30</button>
+      </div>
+    </div>
+    <div class="orders"><h2>Заказы</h2><div id="orders"></div></div>
+  </div>
+  <p class="note">Воспроизводится настоящий журнал за 13 минут пика (17:20–17:33, 20.11). Показаны только номера заказов и действия агента, данные и комментарии клиентов скрыты. Когда агент не уверен (например, в комментарии клиента что-то нестандартное), он передаёт заказ человеку.</p>
+  <section class="cta">
+    <div><h3>Хочешь так же для своего бизнеса?</h3><p>Подключим за один день. Напиши слово «бот».</p></div>
+    <a class="btn" href="https://t.me/bastyq_bot?start=agent">Написать «бот»</a>
+  </section>
+</div>
+<script>
+const TRACE = {"span_sec": 764, "events": [{"t": 0, "n": 77, "kind": "new", "plan": {"Соевый соус порционный": 3, "Имбирь порционный": 3, "Васаби порционный": 3, "Палочки для суши": 2}, "eta": 60}, {"t": 39, "n": "77", "kind": "confirm"}, {"t": 105, "n": 79, "kind": "hold", "why": "причина: комментарий клиента"}, {"t": 184, "n": 80, "kind": "new", "plan": {"Соевый соус порционный": 4, "Имбирь порционный": 4, "Васаби порционный": 4, "Палочки для суши": 5}, "eta": 60}, {"t": 213, "n": 81, "kind": "new", "plan": {"Соевый соус порционный": 3, "Имбирь порционный": 3, "Васаби порционный": 3, "Палочки для суши": 3}, "eta": 60}, {"t": 309, "n": 82, "kind": "new", "plan": {"Соевый соус порционный": 2, "Имбирь порционный": 2, "Васаби порционный": 2, "Палочки для суши": 2}, "eta": 60}, {"t": 456, "n": 83, "kind": "new", "plan": {"Соевый соус порционный": 5, "Имбирь порционный": 5, "Васаби порционный": 5, "Палочки для суши": 3}, "eta": 60}, {"t": 562, "n": "80", "kind": "confirm"}, {"t": 598, "n": "81", "kind": "confirm"}, {"t": 612, "n": "82", "kind": "confirm"}, {"t": 626, "n": "83", "kind": "confirm"}, {"t": 673, "n": 85, "kind": "new", "plan": {"Соевый соус порционный": 1, "Имбирь порционный": 1, "Васаби порционный": 1, "Палочки для суши": 1}, "eta": 30}, {"t": 725, "n": 87, "kind": "new", "plan": {"Соевый соус порционный": 4, "Имбирь порционный": 4, "Васаби порционный": 4, "Палочки для суши": 1}, "eta": 60}, {"t": 764, "n": "87", "kind": "confirm"}]};
+const T0 = "17:20:11";
+const base = T0.split(":").map(Number), pad = n => String(n).padStart(2, "0");
+const clockAt = s => { const x = base[0]*3600 + base[1]*60 + base[2] + Math.floor(s); return pad(Math.floor(x/3600)%24)+":"+pad(Math.floor(x%3600/60))+":"+pad(x%60); };
+const short = {"Соевый соус порционный":"соус","Имбирь порционный":"имбирь","Васаби порционный":"васаби","Палочки для суши":"палочки"};
+const $ = id => document.getElementById(id);
+const feed = $("feed"), orders = $("orders");
+const STEP = [0, 0.7, 1.4, 2.1, 2.8];      // реальные секунды между строками одного заказа: небольшая «работа» агента
+let speed = 8, sim = 0, last = null, queue = [], cnt = [0,0,0], cards = {};
+function build(){
+  queue = [];
+  TRACE.events.forEach(e => {
+    const tm = () => clockAt(e.t);
+    if (e.kind === "new") {
+      const items = Object.entries(e.plan).map(([k,v]) => (short[k]||k)+" "+v).join(" · ");
+      queue.push({t:e.t+STEP[0], cls:"", sub:0, html:'Заказ <span class="no">№'+e.n+'</span> поступил', card:[e.n,"n","поступил","проверяю"]});
+      queue.push({t:e.t+STEP[1], cls:"mu", sub:1, html:"проверяю позиции: ок"});
+      queue.push({t:e.t+STEP[2], cls:"mu", sub:1, html:"+ "+items});
+      queue.push({t:e.t+STEP[3], cls:"mu", sub:1, html:"срок "+e.eta+" мин"});
+      queue.push({t:e.t+STEP[4], cls:"ok", sub:0, html:"дополнен ✓", cnt:0, card:[e.n,"d","дополнен","ждёт подтверждения"]});
+    } else if (e.kind === "confirm") {
+      queue.push({t:e.t, cls:"ok", sub:0, html:'Заказ <span class="no">№'+e.n+'</span> подтверждён → принят ✓', cnt:1, card:[e.n,"ok","принят","подтверждён"]});
+    } else {
+      queue.push({t:e.t, cls:"hd", sub:0, html:'Заказ <span class="no">№'+e.n+'</span> → человеку ⚠', cnt:2, card:[e.n,"h","человеку","нужен человек"]});
+      queue.push({t:e.t+0.7, cls:"mu", sub:1, html:e.why});
+    }
+  });
+  queue.sort((a,b)=>a.t-b.t);
+}
+function setCard(n, cls, label, sub){
+  let c = cards[n];
+  if (!c){ c = document.createElement("div"); c.className = "card"; orders.prepend(c); cards[n] = c; }
+  c.innerHTML = '<div><b>Заказ №'+n+'</b><small>'+sub+'</small></div><span class="pill '+cls+'">'+label+'</span>';
+}
+function emit(q){
+  const d = document.createElement("div"); d.className = "l "+q.cls;
+  d.innerHTML = (q.sub ? "" : '<span class="tm">'+clockAt(q.t)+'</span>') + q.html;
+  feed.appendChild(d); while (feed.children.length > 40) feed.removeChild(feed.firstChild);
+  if (q.cnt !== undefined){ cnt[q.cnt]++; $("c"+(q.cnt === 0 ? 1 : q.cnt === 1 ? 2 : 3)).textContent = cnt[q.cnt]; }
+  if (q.card) setCard(...q.card);
+  while (orders.children.length > 7) orders.removeChild(orders.lastChild);
+}
+function reset(){ sim = 0; cnt = [0,0,0]; cards = {}; feed.innerHTML = ""; orders.innerHTML = ""; ["c1","c2","c3"].forEach(i => $(i).textContent = "0"); build(); }
+function tick(ts){
+  if (last === null) last = ts;
+  const dt = Math.min((ts - last)/1000, 0.5); last = ts;
+  sim += dt * speed;
+  while (queue.length && queue[0].t <= sim) emit(queue.shift());
+  $("clock").textContent = clockAt(sim);
+  if (!queue.length && sim > TRACE.span_sec + 6){ reset(); }
+  requestAnimationFrame(tick);
+}
+document.querySelectorAll(".ctl button").forEach(b => b.onclick = () => {
+  speed = +b.dataset.s; document.querySelectorAll(".ctl button").forEach(x => x.classList.toggle("on", x === b));
+});
+reset(); requestAnimationFrame(tick);
+</script>
+</body>
+</html>
